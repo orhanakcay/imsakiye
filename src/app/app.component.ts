@@ -93,6 +93,11 @@ export class AppComponent implements OnInit{
       title: 'Ramazan Bayramı',
       color: { ...colors.yellow },
       actions: this.actions,
+    },{
+      start: new Date('2023-03-25'),
+      title: 'Aslanhane Caminde Aile İftarı ve Teravih',
+      color: { ...colors.yellow },
+      actions: this.actions,
     }
   ];
 
@@ -108,6 +113,9 @@ export class AppComponent implements OnInit{
       this.activeDayIsOpen = true;
     }
     this.viewDate = date;
+  }
+  eventClicked({ event }: { event: CalendarEvent }): void {
+    console.log('Event clicked', event);
   }
 
   eventTimesChanged({event, newStart, newEnd}: CalendarEventTimesChangedEvent): void {
