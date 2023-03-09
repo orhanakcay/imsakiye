@@ -19,6 +19,8 @@ import {
   CalendarView,
   DAYS_OF_WEEK
 } from 'angular-calendar';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from './dialog/alert.component';
 
 const colors: any = {
   red: {
@@ -77,6 +79,7 @@ export class AppComponent implements OnInit{
       start: subDays(endOfMonth(new Date()), 8),
       title: 'Ramazan 1',
       color: { ...colors.blue },
+      actions: this.actions,
       allDay: true,
     },{
       start: new Date('2023-03-13'),
@@ -104,6 +107,12 @@ export class AppComponent implements OnInit{
   activeDayIsOpen: boolean = true;
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
+
+  constructor(public dialog: MatDialog) {
+    //this.openAlert();
+  }
+
+
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
     if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
       events.length === 0
@@ -116,8 +125,22 @@ export class AppComponent implements OnInit{
   }
   eventClicked({ event }: { event: CalendarEvent }): void {
     console.log('Event clicked', event);
+    //this.openAlert(event.title);
+    //window.location.href = "https://google.com"
   }
 
+  openAlert(def:any){
+    const dialogRef = this.dialog.open(AlertComponent, {
+      data: {
+        title: def,
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+      }
+    });
+  }
+  
   eventTimesChanged({event, newStart, newEnd}: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map(iEvent => {
       if (iEvent === event) {
@@ -130,12 +153,15 @@ export class AppComponent implements OnInit{
       return iEvent;
     });
   }
+  
   setView(view: CalendarView) {
     this.view = view;
   }
+  
   ngOnInit() {
     flatpickrFactory()
   }
+  
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }

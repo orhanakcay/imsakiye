@@ -11,13 +11,16 @@ import { Turkish } from 'flatpickr/dist/l10n/tr';
 import flatpickr from 'flatpickr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialogModule} from '@angular/material/dialog';
+import { AlertComponent } from './dialog/alert.component';
 
 registerLocaleData(localeTr, 'tr', localeTrExtra);
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ registerLocaleData(localeTr, 'tr', localeTrExtra);
     }),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
